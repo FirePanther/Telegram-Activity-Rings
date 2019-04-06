@@ -56,9 +56,11 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, [
 $result = curl_exec($ch);
 curl_close($ch);
 
-// show photo (just for testing) and deinit images
-header('Content-Type: image/png');
-imagepng($images['canvas']);
+if (php_sapi_name() !== 'cli') {
+	// show photo (just for testing) and deinit images
+	header('Content-Type: image/png');
+	imagepng($images['canvas']);
+}
 
 unlink($destination);
 array_walk($images, function($image) {
